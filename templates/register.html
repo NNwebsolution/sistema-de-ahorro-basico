@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top,#0b1220,#050814);
+    color:white;
+    overflow:hidden;
+}
+
+.glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#22c55e;
+    filter:blur(180px);
+    opacity:0.2;
+    top:-120px;
+    right:-120px;
+}
+
+.card{
+    width:360px;
+    padding:30px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    z-index:2;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.3);
+    color:white;
+    outline:none;
+}
+
+input:focus{
+    border:1px solid #22c55e;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.03);
+    box-shadow:0 10px 30px rgba(34,197,94,0.4);
+}
+
+a{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    color:#86efac;
+    text-decoration:none;
+    font-size:13px;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<div class="card">
+    <h2>🧾 Crear cuenta</h2>
+
+    <form method="POST">
+        <input name="user" placeholder="Usuario">
+        <input name="password" type="password" placeholder="Contraseña">
+        <input name="ingreso" placeholder="Ingreso mensual">
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <a href="/">← Ya tengo cuenta</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Fintech Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background: radial-gradient(circle at top,#0b1220,#050814);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* NAVBAR PREMIUM */
+.nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 30px;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter: blur(18px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.nav h2{
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+/* GRID PRINCIPAL */
+.container{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:20px;
+    padding:25px;
+}
+
+/* GLASS CARD PREMIUM */
+.card{
+    background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:22px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform: translateY(-3px);
+}
+
+/* INPUTS MODERNOS */
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.25);
+    color:white;
+    outline:none;
+}
+
+input:focus{
+    border:1px solid #3b82f6;
+}
+
+/* BOTONES PRO */
+button{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(90deg,#3b82f6,#2563eb);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    transform: scale(1.02);
+    box-shadow:0 10px 30px rgba(59,130,246,0.4);
+}
+
+/* METAS */
+.meta{
+    margin-top:12px;
+    padding:14px;
+    border-radius:12px;
+    background:rgba(59,130,246,0.08);
+    border:1px solid rgba(59,130,246,0.15);
+}
+
+/* KPI CARDS */
+.kpis{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    padding:25px;
+}
+
+.kpi{
+    padding:18px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.kpi h3{
+    margin:0;
+    font-size:14px;
+    opacity:0.7;
+}
+
+.kpi p{
+    font-size:20px;
+    font-weight:600;
+    margin-top:8px;
+}
+
+/* ANIMACION FONDO */
+.glow{
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#3b82f6;
+    filter:blur(150px);
+    opacity:0.2;
+    top:-100px;
+    left:-100px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<!-- NAV -->
+<div class="nav">
+    <h2>💰 Fintech Ahorro</h2>
+    <a href="/logout" style="color:white;text-decoration:none;">Salir</a>
+</div>
+
+<!-- KPIS -->
+<div class="kpis">
+
+    <div class="kpi">
+        <h3>Balance total</h3>
+        <p>$ ---</p>
+    </div>
+
+    <div class="kpi">
+        <h3>Metas activas</h3>
+        <p>{{ metas|length }}</p>
+    </div>
+
+    <div class="kpi">
+        <h3>Progreso</h3>
+        <p>📈</p>
+    </div>
+
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="card">
+        <h3>📌 Crear Meta Inteligente</h3>
+
+        <form method="POST">
+            <input name="monto" placeholder="Monto objetivo">
+            <input name="meses" placeholder="Meses">
+            <button>Crear Meta</button>
+        </form>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="card">
+        <h3>📊 Tus Metas</h3>
+
+        {% for m in metas %}
+
+        <div class="meta">
+            <b>Meta #{{m.id}}</b><br>
+            💰 ${{m.monto_objetivo}} <br>
+            ⏳ {{m.meses}} meses
+        </div>
+
+        <canvas id="c{{m.id}}" height="120"></canvas>
+
+        <script>
+        fetch("/api/progreso/{{m.id}}")
+        .then(r=>r.json())
+        .then(data=>{
+            new Chart(document.getElementById("c{{m.id}}"), {
+                type:"doughnut",
+                data:{
+                    labels:["Ahorrado","Restante"],
+                    datasets:[{
+                        data:[data.total, 1000],
+                        backgroundColor:["#22c55e","#ef4444"],
+                        borderWidth:0
+                    }]
+                },
+                options:{
+                    plugins:{
+                        legend:{display:false}
+                    }
+                }
+            })
+        })
+        </script>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

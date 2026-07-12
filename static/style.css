@@ -1,0 +1,43 @@
+body{
+    margin:0;
+    font-family:Inter, Arial;
+    background:#0a0f1c;
+    color:white;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    position:fixed;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    padding:20px;
+}
+
+/* MAIN */
+.main{
+    margin-left:220px;
+    padding:20px;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:15px;
+    margin:10px 0;
+}
+
+input,button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+}
+
+button{
+    background:linear-gradient(90deg,#3b82f6,#2563eb);
+    color:white;
+    cursor:pointer;
+}
